@@ -17,7 +17,11 @@ export class AuthService {
 
   constructor(private http: HttpClient) { }
 
-  public newRegister(user: any) {
+  public newRegister(user: any): any {
     return this.http.post<any>(`${urlApi}/register`, user);
+  }
+
+  public login(user: any): any {
+    return this.http.post<any>(`${urlApi}/login`, user);
   }
 }
