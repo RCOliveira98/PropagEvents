@@ -58,9 +58,15 @@ router.post('/login', (req, res) => {
         }
     });
 });
-
+// events
 router.get('/events', (req, res) => {
-    Event.find((err, results) => {
+    Event.find({ special: false }, (err, results) => {
+        err ? res.status(400).json(err) : res.status(200).json(results)
+    });
+});
+
+router.get('/events/special', (req, res) => {
+    Event.find({ special: true }, (err, results) => {
         err ? res.status(400).json(err) : res.status(200).json(results)
     });
 });

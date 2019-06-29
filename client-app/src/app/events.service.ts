@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 import { urlApi } from './shared/url.api';
@@ -13,5 +12,14 @@ export class EventsService {
 
   public getEventsAll(): any {
     return this.http.get<any>(`${urlApi}/events`);
+  }
+
+  public getEventsSpecial(): any {
+    console.log(`${urlApi}/events/special`);
+    return this.http.get<any>(`${urlApi}/events/special`);
+  }
+
+  public save(event: any): any {
+    return this.http.post<any>(`${urlApi}/events`, event);
   }
 }
