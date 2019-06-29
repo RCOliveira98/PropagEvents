@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -13,6 +13,7 @@ import { NewEventComponent } from './new-event/new-event.component';
 
 import { EventsService } from './events.service';
 import { AuthService } from './auth.service';
+import { InterceptorTokenService } from './interceptor-token.service';
 import { AuthGuard } from './auth.guard';
 
 @NgModule({
@@ -30,7 +31,16 @@ import { AuthGuard } from './auth.guard';
     HttpClientModule,
     AppRoutingModule
   ],
-  providers: [AuthService, EventsService, AuthGuard],
+  providers: [
+    AuthService,
+    EventsService,
+    AuthGuard,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: InterceptorTokenService,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

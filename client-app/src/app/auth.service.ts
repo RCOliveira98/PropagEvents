@@ -28,4 +28,8 @@ export class AuthService {
   public loggedIn(): any {
     return !!localStorage.getItem('token');
   }
+
+  public getToken(): any {
+    return localStorage.getItem('token');
+  }
 }
