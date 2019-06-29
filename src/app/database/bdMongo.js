@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 // detalhes da conexão
 const port = 27017;
-const uri = 'mongodb://localhost/api_one';
+const uri = 'mongodb://localhost/propag_events';
 mongoose.connect(uri, { useNewUrlParser: true })
     .then(() => {
         console.log("Conexão com MongoDB realizada com SUCESSO.");
