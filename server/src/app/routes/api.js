@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const jwt = require('jsonwebtoken');
 
 // models
 const User = require('../models/user');
@@ -8,6 +9,11 @@ const Event = require('../models/event');
 // function generic
 function createUserApi(params = {}) {
     return new User(params);
+}
+
+function generateToken(params = {}) {
+    // const payload = {subject: user.id}
+    return jwt.sign(params, "secretKey");
 }
 
 // rotas (routes)
@@ -20,7 +26,12 @@ router.post('/register', (req, res) => {
 
     console.log(user);
     user.save((err, results) => {
-        err ? res.status(400).send(err) : res.status(200).send(results);
+        if (err) {
+            res.status(400).send(err);
+        } else {
+            const token = generateToken({ subject: user.id });
+            res.status(200).send({ token });
+        }
     })
 });
 
@@ -36,7 +47,12 @@ router.post('/login', (req, res) => {
             res.status(400).send(err);
         } else if (user) {
             // email cadastrado. A senha está correta?
-            password === user.password ? res.status(200).send(user) : res.status(400).send('Erro: Senha inválida!');
+            if (password === user.password) {
+                token = generateToken({ subject: user.id });
+                res.status(200).send({ token });
+            } else {
+                res.status(400).send('Erro: Senha inválida!');
+            }
         } else {
             res.send('Erro: Usuário não cadastrado.');
         }
