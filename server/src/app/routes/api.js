@@ -18,8 +18,9 @@ router.get('/', (req, res) => {
 router.post('/register', (req, res) => {
     const user = createUserApi(req.body);
 
+    console.log(user);
     user.save((err, results) => {
-        err ? res.status(400).send(err) : res.status(200).send(user);
+        err ? res.status(400).send(err) : res.status(200).send(results);
     })
 });
 
