@@ -6,8 +6,9 @@ import { AuthService } from './../auth.service';
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css'],
+  providers: [AuthService]
 })
-export class RegisterComponent implements OnInit, OnDestroy {
+export class RegisterComponent implements OnInit {
 
   private inscricao: Subscription;
   public user = {};
@@ -16,12 +17,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
   ngOnInit() {
   }
 
-  ngOnDestroy() {
-    this.inscricao.unsubscribe();
-  }
-
-  resgister(): void {
-    this.inscricao = this.service.newRegister(this.user).subscribe(
+  register(): void {
+    this.service.newRegister(this.user).subscribe(
       res => console.log(res),
       err => console.log(err)
     );

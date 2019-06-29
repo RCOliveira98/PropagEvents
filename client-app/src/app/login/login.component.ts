@@ -6,11 +6,11 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
+  providers: [AuthService]
 })
-export class LoginComponent implements OnInit, OnDestroy {
+export class LoginComponent implements OnInit {
 
-  private inscricao: Subscription;
   public userLogin = {};
 
   constructor(private service: AuthService) { }
@@ -18,12 +18,8 @@ export class LoginComponent implements OnInit, OnDestroy {
   ngOnInit() {
   }
 
-  ngOnDestroy() {
-    this.inscricao.unsubscribe();
-  }
-
-  public logar(){
-    this.inscricao = this.service.login(this.userLogin).subscribe(
+  public logar() {
+     this.service.login(this.userLogin).subscribe(
       res => console.log(res),
       err => console.log(err)
     );
