@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { AuthService } from './../auth.service';
-import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -13,14 +13,17 @@ export class LoginComponent implements OnInit {
 
   public userLogin = {};
 
-  constructor(private service: AuthService) { }
+  constructor(private _service: AuthService, private _roteador: Router) { }
 
   ngOnInit() {
   }
 
   public logar() {
-     this.service.login(this.userLogin).subscribe(
-      res => console.log(res),
+     this._service.login(this.userLogin).subscribe(
+      res => {
+        localStorage.setItem('token', res.token);
+        this._roteador.navigate(['/special']);
+      },
       err => console.log(err)
     );
 
