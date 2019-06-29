@@ -24,4 +24,8 @@ export class AuthService {
   public login(user: any): any {
     return this.http.post<any>(`${urlApi}/login`, user);
   }
+
+  public loggedIn(): any {
+    return !!localStorage.getItem('token');
+  }
 }

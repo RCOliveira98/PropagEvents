@@ -11,6 +11,10 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { NewEventComponent } from './new-event/new-event.component';
 
+import { EventsService } from './events.service';
+import { AuthService } from './auth.service';
+import { AuthGuard } from './auth.guard';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,7 +30,7 @@ import { NewEventComponent } from './new-event/new-event.component';
     HttpClientModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [AuthService, EventsService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
